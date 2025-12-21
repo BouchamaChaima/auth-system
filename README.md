@@ -1,6 +1,6 @@
 ## PHP login system
 
-Simple authenticatin using:
+Simple authentication using:
 - PHP
 - MySQL
 - Bootstrap
