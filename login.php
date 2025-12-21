@@ -1,3 +1,30 @@
+<?php
+
+session_start();
+require 'db.php';
+
+$error = "";
+
+if($_SERVER["REQUEST_METHOD"] === "POST") {
+    $email = $_POST["email"];
+    $password = $_POST["password"];
+
+    $query = "select * from users where email = :email";
+    $stmt = $conn->prepare($query);
+    $stmt->execute([':email' => $email]);
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if($user && password_verify($password, $user['password'])) {
+        $_SESSION['user_id'] = $user ['id'];
+        header("Location: dashboard.php");
+        exit;
+    } else {
+        $error = "Email or password incorrect! Please try again";
+    }
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,6 +35,11 @@
 </head>
 <body class="container mt-5">
     <h3 class="text">Login</h3>
+
+    <?php if($error): ?>
+    <div class="alert alert-danger"><?= $error ?></div>
+    <?php endif; ?>
+
     <form action="" method="post">
         <input class="form-control mb-2" type="email" name="email" id="email" placeholder="Email">
         <input class="form-control mb-2" type="password" name="password" id="password" placeholder="Password">
