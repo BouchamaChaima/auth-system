@@ -17,8 +17,11 @@ if(!isset($_SESSION['user_id'])) {
 </head>
 <body>
     <h2>Dashboard</h2>
-    <p>Welcome</p>
-    <a href="logout.php">Logout</a>
+    <p>Welcome! You're logged in successfully</p>
+    <form method="POST" action="logout.php">
+        <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
+        <button class="btn btn-danger">Logout</button>
+    </form>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"></script>
 </body>

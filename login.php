@@ -5,7 +5,19 @@ require 'db.php';
 
 $error = "";
 
+if(empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+
 if($_SERVER["REQUEST_METHOD"] === "POST") {
+
+    if (
+        !isset($_POST['csrf_token']) ||
+        $_POST['csrf_token'] !== $_SESSION['csrf_token']
+    ) {
+        die("CSRF token validation failed");
+    }
+
     $email = $_POST["email"];
     $password = $_POST["password"];
 
@@ -41,6 +53,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST") {
     <?php endif; ?>
 
     <form action="" method="post">
+        <input type="hidden" name="csrf_token" value="<=$_SESSION['csrf_token'] ?>">
         <input class="form-control mb-2" type="email" name="email" id="email" placeholder="Email">
         <input class="form-control mb-2" type="password" name="password" id="password" placeholder="Password">
         <button class="btn btn-success">Login</button>
