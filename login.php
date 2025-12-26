@@ -42,22 +42,25 @@ if($_SERVER["REQUEST_METHOD"] === "POST") {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css" type="text/css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
     <title>Login</title>
 </head>
-<body class="container mt-5">
-    <h3 class="text">Login</h3>
+<body class="d-flex justify-content-center align-items-center mt-5 bg-light">
+    <div class="w-25">
+        <h3 class="text mb-5 text text-center">Login</h3>
 
-    <?php if($error): ?>
-    <div class="alert alert-danger"><?= $error ?></div>
-    <?php endif; ?>
+        <?php if($error): ?>
+        <div class="alert alert-danger mb-2"><?= $error ?></div>
+        <?php endif; ?>
 
-    <form action="" method="post">
-        <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
-        <input class="form-control mb-2" type="email" name="email" id="email" placeholder="Email">
-        <input class="form-control mb-2" type="password" name="password" id="password" placeholder="Password">
-        <button class="btn btn-success">Login</button>
-    </form>
+        <form action="" method="post">
+            <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
+            <input class="form-control mb-4" type="email" name="email" id="email" placeholder="Email">
+            <input class="form-control mb-4" type="password" name="password" id="password" placeholder="Password">
+            <button class="btn btn-primary col-12">Login</button>
+        </form>
+    </div>
 
 
 
